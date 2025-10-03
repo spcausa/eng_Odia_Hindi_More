@@ -7,6 +7,7 @@
   <h1>Translate English to Odia, Tamil, Hindi, or Telugu</h1>
 
   <input id="inputText" placeholder="Type in English">
+  <button id="btnClear">Clear</button>
   <br><br>
 
   <div style="display: flex; gap: 20px; align-items: center;">
@@ -40,14 +41,21 @@
 
       const res = await fetch(`https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=${langCode}&dt=t&q=${encodeURIComponent(text)}`);
       const data = await res.json();
-      const translated = data[0][0][0];
+      const translated = data[0][0][0];  // Only use the first/main translation
       document.getElementById('output').textContent = translated;
     }
 
+    // Add event listeners for each language button
     document.getElementById('btnOdia').addEventListener('click', () => translateTo('or'));
     document.getElementById('btnTamil').addEventListener('click', () => translateTo('ta'));
     document.getElementById('btnHindi').addEventListener('click', () => translateTo('hi'));
     document.getElementById('btnTelugu').addEventListener('click', () => translateTo('te'));
+
+    // Add event listener for clear button
+    document.getElementById('btnClear').addEventListener('click', () => {
+      document.getElementById('inputText').value = '';
+      document.getElementById('output').textContent = '';
+    });
   </script>
 </body>
 </html>
